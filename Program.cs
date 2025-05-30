@@ -1,6 +1,7 @@
-﻿using CSharpHelper;
+﻿using HtmlAgilityPack;
+using CSharpHelper;
+
 using CSharpHelper.ImageScrapers;
-using HtmlAgilityPack;
 
 namespace ImageScraper;
 public class Program
@@ -24,26 +25,20 @@ public class Program
         foreach (var link in links)
         {
             Console.WriteLine($"scraping {link}");
-
-            var images = Array.Empty<(string link, string name)>();
-
-            if (KendallJennerScraper_Com_Br.IsValidLink(link))
-                images = await KendallJennerScraper_Com_Br.GetAlbumPhotos(link);
+            HtmlDocument page = await Internet.GetStaticPage_HTTPClientAsync(link);
+            
+            if (CopperminePhotoGallery.IsCopperminePhotoGalleryPage(page))
+                await CopperminePhotoGallery.Download(link, downloadedMediaFolder);
             else if (HaileeSteinfeld_ComScraper.IsHaileeSteinfeld_ComUrl(link))
                 await HaileeSteinfeld_ComScraper.Download(link, downloadedMediaFolder);
-            else if (Listal_ComScraper.IsListalUrl(link))
-                await Listal_ComScraper.Download(link, downloadedMediaFolder);
-            else if (MillieBobbyBrown_Com_BrScraper.IsMillieBobbyBrown_Com_Br(link))    
-                await MillieBobbyBrown_Com_BrScraper.Download(link, downloadedMediaFolder);
             else if (SadieSinkFan_ComScraper.IsSadieSink_Com(link))
                 await SadieSinkFan_ComScraper.Download(link, downloadedMediaFolder);
             else if (SophiaLillisFan_ComScraper.IsSophiaLillisFan_Com(link))
                 await SophiaLillisFan_ComScraper.Download(link, downloadedMediaFolder);
             else
             {
-                HtmlDocument page = await Internet.GetStaticPage_HTTPClientAsync(link);
                 HtmlNodeCollection imageNodes = page.DocumentNode.SelectNodes("//img");
-                images = new (string link, string name)[imageNodes.Count];
+                var images = new (string link, string name)[imageNodes.Count];
 
                 Uri uri = new Uri(link);
                 string host = uri.Host;
@@ -59,9 +54,10 @@ public class Program
                     string imageLink = scheme + "://" + host + src;
                     images[i] = (imageLink, fileName);
                 }
+
+                await Internet.DownloadImages(images, downloadedMediaFolder);
             }
             
-            await Internet.DownloadImages(images, downloadedMediaFolder);
         }
     }
 }

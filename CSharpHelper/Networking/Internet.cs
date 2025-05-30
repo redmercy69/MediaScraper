@@ -82,7 +82,6 @@ public static class Internet
             Console.WriteLine($"Downloading html from {url}");
             string html = await m_httpClient.GetStringAsync(url);
             Console.WriteLine($"Downloaded html from {url}");
-            File.WriteAllText("page.html", html);
 
             page.LoadHtml(html);
             return page;
