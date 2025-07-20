@@ -68,7 +68,7 @@ public static class SophiaLillisFan_ComScraper
         {
             HtmlDocument page = await Internet.GetStaticPage_HTTPClientAsync(url);
 
-            Album album = new Album
+            Album album = new()
             {
                 Images = await GetImages(page),
                 PageCount = GetSize(page).pageCount,

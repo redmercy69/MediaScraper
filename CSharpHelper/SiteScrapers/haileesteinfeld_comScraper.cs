@@ -23,9 +23,9 @@ public class HaileeSteinfeld_ComScraper
 
     public class Album
     {
-        public string Name {get; protected set;}
+        public string Name {get; protected set;} = string.Empty;
         public (ushort pageCount, ushort fileCount) Size {get; protected set;}
-        public (string link, string name)[] Images {get; protected set;}
+        public (string link, string name)[] Images {get; protected set;} = [];
 
         public const ushort MAX_PHOTOS_PER_PAGE = 125;
 
@@ -131,9 +131,9 @@ public class HaileeSteinfeld_ComScraper
     }
     public class Category
     {
-        public string Name {get; protected set;}
-        public Category[] SubCategories {get; protected set;}
-        public Album[] Albums {get; protected set;}
+        public string Name {get; protected set;} = string.Empty;
+        public Category[] SubCategories {get; protected set;} = [];
+        public Album[] Albums {get; protected set;} = [];
 
 
         public async Task Download(DirectoryInfo parentFolder)
