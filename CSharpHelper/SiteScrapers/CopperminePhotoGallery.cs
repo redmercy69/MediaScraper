@@ -197,7 +197,6 @@ public static class CopperminePhotoGallery
 
                     string hrefLink = thumbnailNode.GetAttributeValue("src", "No Source").Replace("thumb_", "");
 
-                    //string src = $"https://kendalljenner.com.br/gallery/{hrefLink}";
                     string src = $"{baseUrl}/{hrefLink}";
                     string fileName = thumbnailNode.GetAttributeValue("alt", "No Name");
 

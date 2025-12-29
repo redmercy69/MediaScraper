@@ -14,4 +14,5 @@ for example to scrape [this](https://milliebobbybrown.com.br/galeria/thumbnails.
 * sophialillisfan.com
 * haileesteinfield.com
 * sadiesinkfan.com
+* https://ellapurnellphotos.com/
 * Will run generic image scrape if the site is not supported

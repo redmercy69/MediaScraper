@@ -26,7 +26,9 @@ public class Program
         {
             Console.WriteLine($"scraping {link}");
             HtmlDocument page = await Internet.GetStaticPage_HTTPClientAsync(link);
-            
+
+            //await EllaPurnellPhotos_ComScraper.Download(page, downloadedMediaFolder);
+
             if (CopperminePhotoGallery.IsCopperminePhotoGalleryPage(page))
                 await CopperminePhotoGallery.Download(link, downloadedMediaFolder);
             else if (HaileeSteinfeld_ComScraper.IsHaileeSteinfeld_ComUrl(link))
